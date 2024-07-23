@@ -1,0 +1,11 @@
+# fastlane/Fastfile
+default_platform(:android)
+
+platform :android do
+  desc "Build and deploy the app to Firebase"
+  lane :deploy do
+    gradle(
+      task: "clean assembleRelease"
+    )
+  end
+end
