@@ -1,10 +1,12 @@
-name: Android CI
+name: android
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -12,29 +14,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
+        java-version: 11
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-  
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
 
-       # DevSkim is security linter that highlights common security issues in source code.
-    - name: DevSkim
-      uses: microsoft/DevSkim-Action@v1.0.3
+    - name: Download Dependencies
+      run: ./gradlew build
+
+    - name: Run Tests
+      run: ./gradlew test
+
+    - name: Build Release
+      run: ./gradlew assembleRelease
 
     - name: Install Fastlane
-      run: gem install fastlane
+      run: |
+        gem install bundler
+        bundle install
 
     - name: Run Fastlane
-      run: bundle exec fastlane android
       env:
-        KEYSTORE_PASSWORD: ofppt2024
-        KEY_PASSWORD: ofppt2024
-        KEYSTORE_ALIAS: ofppt2024
-        # Add other environment variables here if needed
+        GRADLE_HOME: /usr/share/gradle
+        ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+        GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+      run: |
+        echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > keystore.jks
+        bundle exec fastlane deploy
