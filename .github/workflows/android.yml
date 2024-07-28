@@ -28,9 +28,6 @@ jobs:
         ruby-version: '2.7' # Ruby version used by Fastlane
         bundler-cache: true # Caches installed gems
 
-    - name: Install dependencies with Bundler
-      run: bundle install
-
     - name: Build APK with Fastlane
       run: bundle exec fastlane android build_apk # Replace `build_apk` with your Fastlane lane
 
