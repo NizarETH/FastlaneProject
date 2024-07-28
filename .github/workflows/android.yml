@@ -25,7 +25,7 @@ jobs:
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: '3.0' # or the version your project requires
+        ruby-version: '2.7' # Use a widely supported Ruby version
 
     - name: Install dependencies with Bundler
       run: |
@@ -33,7 +33,7 @@ jobs:
         bundle config set --local path 'vendor/bundle'
         bundle install
 
-    - name: Build APK with Fastlane 
+    - name: Build APK with Fastlane
       run: bundle exec fastlane android build_apk
 
     - name: Upload APK to GitHub Artifacts
