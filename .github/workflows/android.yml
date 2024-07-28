@@ -1,41 +1,25 @@
-name: Android APK Build
+name: Build and deploy Android app
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up JDK 11
+    - uses: actions/checkout@v3
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
         java-version: '11'
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        ruby-version: '2.7'
-        bundler-cache: true
-
-    - name: Install dependencies with Bundler
-      run: bundle install
-
-    - name: Build APK with Fastlane
-      run: bundle exec fastlane android build_apk
-
-    - name: Upload APK to GitHub Artifacts
-      uses: actions/upload-artifact@v3
+        node-version: '16'
+    - name: Install dependencies
+      run: npm install
+    - name: Setup Fastlane
+      uses: fastlane/fastlane-action@master
       with:
-        name: app-release.apk
-        path: app/build/outputs/apk/release/app-release.apk
+        lanes: beta
