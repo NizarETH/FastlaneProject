@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Setup Fastlane
-      uses: fastlane/fastlane-action@master
+      uses: fastlane/fastlane-action@v1.0.0  # Replace with the desired version
       with:
         lanes: beta
