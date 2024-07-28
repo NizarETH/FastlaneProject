@@ -1,8 +1,8 @@
-name: Build and deploy Android app
+name: Build APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Setup Fastlane
-      uses: fastlane/fastlane-action@v1.0.0  # Replace with the desired version
+      uses: fastlane/fastlane-action@master
       with:
-        lanes: beta
+        lanes: build_apk
