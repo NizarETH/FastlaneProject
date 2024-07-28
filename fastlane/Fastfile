@@ -1,11 +1,12 @@
-# fastlane/Fastfile
 default_platform(:android)
 
 platform :android do
-  desc "Build and deploy the app to Firebase"
-  lane :deploy do
+  desc "Build a release APK"
+  lane :build_apk do
     gradle(
-      task: "clean assembleRelease"
+      task: "assemble",
+      build_type: "Release"
     )
+    # You can add more actions here, such as signing the APK if needed
   end
 end
