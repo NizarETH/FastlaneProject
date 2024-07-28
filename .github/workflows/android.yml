@@ -29,7 +29,7 @@ jobs:
         bundler-cache: true
 
     - name: List files in working directory
-      run: ls -la ./path/to/your/directory
+      run: ls -la ./../../fastlane/Fastfile
 
     - name: Install dependencies with Bundler
       run: bundle install
