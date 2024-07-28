@@ -30,11 +30,9 @@ jobs:
 
     - name: Install dependencies with Bundler
       run: bundle install
-      working-directory: fastlane # Specify the directory containing your Gemfile
 
     - name: Build APK with Fastlane
       run: bundle exec fastlane android build_apk
-      working-directory: fastlane # Specify the directory where Fastlane is configured
 
     - name: Upload APK to GitHub Artifacts
       uses: actions/upload-artifact@v3
