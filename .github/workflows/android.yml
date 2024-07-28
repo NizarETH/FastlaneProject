@@ -29,15 +29,15 @@ jobs:
         bundler-cache: true
 
     - name: List files in working directory
-      run: ls -la ./fastlane/Fastfile
+      run: ls -la ./fastlane
 
     - name: Install dependencies with Bundler
       run: bundle install
-      working-directory: ./fastlane/Fastfile
+      working-directory: ./fastlane
 
     - name: Build APK with Fastlane
       run: bundle exec fastlane android build_apk
-      working-directory: ./fastlane/Fastfile
+      working-directory: ./fastlane
 
     - name: Upload APK to GitHub Artifacts
       uses: actions/upload-artifact@v3
