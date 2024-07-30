@@ -29,8 +29,9 @@ jobs:
           bundler-cache: true
 
 
-      - name: Build APK with Fastlane
+      - name: Build APK with Fastlane       
         run: bundle exec fastlane android build_apk
+        working-directory: ./ # Ensure this path matches the Gemfile location
 
       - name: Upload APK to GitHub Artifacts
         uses: actions/upload-artifact@v3
