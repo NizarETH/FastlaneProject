@@ -21,10 +21,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Clean Bundler cache
-        run: bundle clean --force
-        working-directory: ./ # Adjust if needed
-        
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.8'
+          bundler-cache: true
+
       - name: Install Bundler
         run: gem install bundler
 
@@ -35,6 +38,7 @@ jobs:
       - name: Check Ruby and Fastlane versions
         run: |
           ruby -v
+          bundle -v
           bundle exec fastlane -v
         working-directory: ./ # Ensure this matches the location of your Gemfile
 
