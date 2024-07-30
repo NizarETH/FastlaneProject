@@ -32,6 +32,16 @@ jobs:
         run: bundle install
         working-directory: ./ # Ensure this matches the location of your Gemfile
 
+      - name: Update gems
+        run: bundle update
+        working-directory: ./ # Ensure this matches the location of your Gemfile
+
+      - name: Check Ruby and Fastlane versions
+        run: |
+          ruby -v
+          bundle exec fastlane -v
+        working-directory: ./ # Ensure this matches the location of your Gemfile
+
       - name: Build APK with Fastlane
         run: bundle exec fastlane android build_apk
         working-directory: ./ # Ensure this path matches the Gemfile location
