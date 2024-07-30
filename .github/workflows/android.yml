@@ -28,8 +28,11 @@ jobs:
           ruby-version: '2.7'
           bundler-cache: true
 
+      - name: Install dependencies
+        run: bundle install
+        working-directory: ./ # Ensure this matches the location of your Gemfile
 
-      - name: Build APK with Fastlane       
+      - name: Build APK with Fastlane
         run: bundle exec fastlane android build_apk
         working-directory: ./ # Ensure this path matches the Gemfile location
 
