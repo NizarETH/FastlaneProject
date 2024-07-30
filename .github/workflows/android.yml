@@ -31,6 +31,9 @@ jobs:
       - name: Install Bundler
         run: gem install bundler -v 2.4.22
 
+      - name: Install Fastlane
+        run: gem install fastlane -v 2.222.0
+
       - name: Install dependencies
         run: bundle install --verbose
         working-directory: ./ # Ensure this matches the location of your Gemfile
